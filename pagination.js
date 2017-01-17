@@ -15,7 +15,8 @@
  *      }
  *   });
  */
-define(['jquery'],function($){
+!(function($){
+	/** 使用严格模式 **/
     "use strict";
     $.fn.Pagination = function(options){
         //用户选项覆盖插件默认选项 
@@ -80,4 +81,4 @@ define(['jquery'],function($){
         pageAll:0,//总条数
         callback:function(selPage){console.log(selPage)}
     }
-});
+})(jQuery);
