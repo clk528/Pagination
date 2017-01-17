@@ -24,46 +24,44 @@
         var that    = this,
             pageAll = opts.pageAll,
             nowPage = opts.nowPage,
-            pageNum = opts.pageNum;
+            pageNum = opts.pageNum,
+            showPage= opts.showPage;
 
         if(pageAll<=1){
             return void 0;
         }
-        var first = Number(nowPage)-Number(1);
-        var next = Number(nowPage)+Number(1);
-
         var str='<div class="h-pages clearfix"><ul class="pagination fr mt20">';
 
-        if(first==1||first>1){
-            str += '<li><a class="first" data-page="'+first+'"><img src="/static/images/zuo.png"></a></li>';
+        if((nowPage - 1) >= 1){
+            str += '<li><a class="prev" data-page="'+(nowPage - 1)+'"><img src="static/images/zuo.png"></a></li>';
         }
 
-        if(pageNum > 5){
-            if(nowPage < 3){
-                for(var page = 1; page <= 5;page ++){
+        if(pageNum > showPage){
+            if(nowPage < showPage){
+                for(var page = 1; page <= showPage; page++ ){
                     page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str+='<li><a class="num" data-page="'+page+'">'+page+"</a></li>";
                 }
-            }else{
-                if(pageNum-nowPage>2){
-                    var pagenoTemp=nowPage-2;
-                    for(var page=pagenoTemp;page<pagenoTemp+5;page++){
+            } else {
+                //总页数减去当前页大于2?
+                if(pageNum - nowPage > 2){
+                    var pagenoTemp = nowPage - 2;
+                    for( var page = pagenoTemp; page < pagenoTemp + showPage; page++ ){
                         page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str+='<li><a class="num" data-page="'+page+'">'+page+"</a></li>";                            
                     }
                 }else{
-
-                    for(var page = pageNum - 4; page <= pageNum; page++){
+                    for(var page = pageNum - ( showPage -1); page <= pageNum; page++){
                         page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str+='<li><a class="num" data-page="'+page+'">'+page+"</a></li>";                            
                     }
                 }
             }
         } else {
-            for(var page=1;page<=pageNum;page++){
+            for(var page=1;page <= pageNum; page++){
                 page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str += '<li><a class="num" data-page="'+page+'">'+page+"</a></li>";
             }
         }
 
-        if(next == pageNum || next < pageNum){
-            str += '<li><a class="next" data-page="'+next+'"><img src="/static/images/you.png"></a></li>';
+        if((nowPage + 1) <= pageNum){
+            str += '<li><a class="next" data-page="'+(nowPage + 1)+'"><img src="static/images/you.png"></a></li>';
         }
         str += "</ul></div>";
         $(that).html(str);
@@ -79,6 +77,7 @@
         nowPage:1, //当前页
         pageNum:0,//总页数
         pageAll:0,//总条数
+        showPage:5,//展示多少页
         callback:function(selPage){console.log(selPage)}
     }
 })(jQuery);

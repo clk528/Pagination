@@ -1,0 +1,133 @@
+.userCenter .h-pages {
+    margin: 30px 15px 15px 0
+}
+
+.userCenter .h-pages a {
+    font-size: 14px
+}
+
+.userCenter .h-pages a:hover {
+    color: #ee6d68;
+    text-decoration: underline
+}
+
+.userCenter .h-pages img {
+    height: 15px
+}
+
+.userCenter .h-pages .current {
+    float: left;
+    font-size: 14px
+}
+
+.userCenter .h-pages .pagination .rows {
+    font-size: 14px
+}
+.clearfix {
+    zoom:1
+}
+
+.clearfix:after,.clearfix:before {
+    display: table;
+    content: " "
+}
+
+.clearfix:after {
+    clear: both
+}
+.h-pages .pagination {
+    float: right;
+    font-size: 24px;
+    padding-top: 3px
+}
+
+.h-pages .pagination .current {
+    font-size: 14px;
+    border-color: #ca3232;
+    background: #ca3232;
+    color: #fff;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center
+}
+
+.h-pages .pagination li {
+    float: left;
+    margin-left: 5px;
+    border: 1px solid #ddd;
+    list-style-type:none;
+}
+
+.h-pages .pagination li a {
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    color: #333;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    font-size: 14px
+}
+
+.h-pages .pagination li a:hover {
+    color: #ca3232
+}
+
+.h-pages .pagination li .rows {
+    font-size: 18px;
+    color: #7f7f7f;
+    margin-right: 10px;
+    margin-left: 10px;
+    float: left
+}
+
+.h-pages .pagination li .rows b {
+    padding: 0 5px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400
+}
+
+.h-pages .pagination li .prev {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    position: relative;
+    margin-top: 1px
+}
+
+.h-pages .pagination li .prev img {
+    top: 8px;
+    left: 12px;
+    position: absolute;
+    width: 8px;
+    opacity: .5
+}
+
+.h-pages .pagination li .next {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    position: relative;
+    margin-top: 1px
+}
+
+.h-pages .pagination li .next img {
+    top: 8px;
+    left: 12px;
+    position: absolute;
+    width: 8px;
+    opacity: .5
+}
+
+.h-pages .pagination li:hover {
+    border-color: #ca3232
+}
+
+.h-pages .pagination .b-none {
+    border: none;
+    background: #fff
+}
