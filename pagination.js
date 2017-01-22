@@ -1,83 +1,117 @@
 /**
  * @author clk<chenlongke@xf9.com>
  * 翻页js插件。
- * nowPage  当前页
- * pageNum  总页数
- * pageAll  总条数
- * callback 回调函数
+ * currentPage  当前页
+ * pageSize  总页数
+ * itemsCount  总条数
+ * showCtrl 是否显示页数信息
+ * onSelect 回调函数
  * 使用方法:
- *   $("divID").Pagination({
- *      nowPage:1,
- *      pageNum:Math.ceil(total/10),
- *      pageAll:total,
- *      callback:function(selPage){
- *          console.log("当前选择的页:%d",selPage);
- *      }
- *   });
+ * $("#clk").Pagination({
+ *      currentPage : 1,//当前页
+ *      displayPage : 5,//展示多少页
+ *      itemsCount  : total, //总数量
+ *      pageSize    : Math.ceil(total/10),//总页数
+ *      showCtrl    : true
+ *  });
  */
 !(function($){
 	/** 使用严格模式 **/
     "use strict";
-    $.fn.Pagination = function(options){
-        //用户选项覆盖插件默认选项 
-        var opts = $.extend( true, {}, $.fn.Pagination.defaultOptions, options );
-        var that    = this,
-            pageAll = opts.pageAll,
-            nowPage = opts.nowPage,
-            pageNum = opts.pageNum,
-            showPage= opts.showPage;
-
-        if(pageAll<=1){
-            return void 0;
-        }
-        var str='<div class="h-pages clearfix"><ul class="pagination fr mt20">';
-
-        if((nowPage - 1) >= 1){
-            str += '<li><a class="prev" data-page="'+(nowPage - 1)+'"><img src="static/images/zuo.png"></a></li>';
-        }
-
-        if(pageNum > showPage){
-            if(nowPage < showPage){
-                for(var page = 1; page <= showPage; page++ ){
-                    page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str+='<li><a class="num" data-page="'+page+'">'+page+"</a></li>";
+	
+	function Pagination(opts){
+		this.currentPage  = opts.currentPage;//当前页
+		this.displayPage  = opts.displayPage < 5 ? 5 : opts.displayPage;//展示多少页
+		this.itemsCount   = opts.itemsCount; //总数量
+		this.pageSize     = opts.pageSize;//总页数
+        this.remote       = opts.remote;  
+		this.showCtrl     = opts.showCtrl; // 是否展示页数信息
+		this.onSelect     = opts.onSelect;//点击回调事件
+	}
+	
+	Pagination.prototype = {
+		_init : function (opts,hookNode){//初始化
+			this.hookNode = hookNode;
+            var tpl = '<div class="h-pages"></div>';
+            this.hookNode.html(tpl);
+            this._drawHtml();
+            this.showCtrl && this._onCtrl();
+            this._onSelect();
+		},
+		_drawHtml : function(){//画翻页主体
+            var outer = this.hookNode.children('.h-pages');
+			var tpl = '<ul class = "pagination fr mt20">';
+            
+            ((this.currentPage - 1) >=1 ) ? tpl+= '<li><a class="prev" data-page="'+(this.currentPage - 1)+'"><img src="static/images/zuo.png"></a></li>' : '';
+            
+            if(this.pageSize > this.displayPage){
+                if(this.currentPage < this.displayPage){
+                    for(var page = 1; page <= this.displayPage; page++ ){
+                        page == this.currentPage ? tpl += '<li><span class="current">' + page + '</span></li>' : tpl += '<li><a class="num" data-page="' + page + '">' + page + '</a></li>';
+                    }
+                } else {
+                    if(this.pageSize - this.currentPage > 2){
+                        var pagenoTemp = this.currentPage - 2;
+                        for( var page = pagenoTemp; page < pagenoTemp + this.displayPage; page++ ){
+                            page == this.currentPage ? tpl += '<li><span class="current">' + page + '</span></li>' : tpl += '<li><a class="num" data-page="' + page + '">' + page + '</a></li>';
+                        }
+                    }else{
+                        for(var page = this.pageSize - ( this.currentPage -1); page <= this.pageSize; page++){
+                            page == this.currentPage ? tpl += '<li><span class="current">' + page + '</span></li>' : tpl += '<li><a class="num" data-page="' + page + '">' + page + '</a></li>';
+                        }
+                    }
                 }
             } else {
-                //总页数减去当前页大于2?
-                if(pageNum - nowPage > 2){
-                    var pagenoTemp = nowPage - 2;
-                    for( var page = pagenoTemp; page < pagenoTemp + showPage; page++ ){
-                        page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str+='<li><a class="num" data-page="'+page+'">'+page+"</a></li>";                            
-                    }
-                }else{
-                    for(var page = pageNum - ( showPage -1); page <= pageNum; page++){
-                        page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str+='<li><a class="num" data-page="'+page+'">'+page+"</a></li>";                            
-                    }
+                for(var page=1;page <= this.pageSize; page++){
+                    page == this.currentPage ? tpl += '<li><span class="current">' + page + '</span></li>' : tpl += '<li><a class="num" data-page="' + page + '">' + page + '</a></li>';
                 }
             }
-        } else {
-            for(var page=1;page <= pageNum; page++){
-                page == nowPage ? str+='<li><span class="current">'+page+'</span></li>' : str += '<li><a class="num" data-page="'+page+'">'+page+"</a></li>";
-            }
-        }
 
-        if((nowPage + 1) <= pageNum){
-            str += '<li><a class="next" data-page="'+(nowPage + 1)+'"><img src="static/images/you.png"></a></li>';
-        }
-        str += "</ul></div>";
-        $(that).html(str);
-        $("a[data-page]").off('click').on('click',function(){
-            if($.isFunction(opts.callback)){
-                opts.callback.call($(this),this.dataset.page);
-            }
-        });
-    }
+            tpl += ((this.currentPage + 1) <= this.pageSize) ? ('<li><a class="next" data-page="'+(this.currentPage + 1)+'"><img src="static/images/you.png"></a></li></ul>') : '</ul>';
+            this.showCtrl && (tpl += this._drawCtrl());
+            outer.html(tpl);
+            return this;
+		},
+		_drawCtrl : function (){//画控制信息			
+			var tpl = ''+
+                    '<div>　'+
+                        '<span>' + this.itemsCount + '条</span>　'+
+                        '<span>共' + this.pageSize + '页</span>　' + 
+                        '<span>　到　<input type="text" class="page-num"/><button class="page-confirm">确定</button>页</span>' + 
+                    '</div>';
+			return tpl;
+		},
+        _onCtrl : function(){
+            return this;
+        },
+		_onSelect : function (){
+			var self = this;
+            self.hookNode.children('.h-pages').on('click', 'a', function (e) {
+                e.preventDefault();
+                var tmpNum = parseInt($(this).attr('data-page'));
+                if(!self.remote){
+                    self.currentPage = tmpNum;
+                    self._drawHtml();
+                }
+                if ($.isFunction(self.onSelect)) {
+                    self.onSelect.call($(this), tmpNum);
+                }
+            });
+		}
+	};
 
-    /*默认参数*/
-    $.fn.Pagination.defaultOptions = {
-        nowPage:1, //当前页
-        pageNum:0,//总页数
-        pageAll:0,//总条数
-        showPage:5,//展示多少页
-        callback:function(selPage){console.log(selPage)}
-    }
-})(jQuery);
+    $.fn.Pagination = function(options){
+        var opts = $.extend({}, $.fn.Pagination.defaults, typeof options == 'object' && options);
+        return new Pagination(opts)._init(opts,$(this));
+    };
+	
+    $.fn.Pagination.defaults = {
+        currentPage : 1,//当前页
+        displayPage : 5,//展示多少页
+        itemsCount  : 0, //总数量
+        pageSize    : 0,//总页数
+        remote      : true,
+        showCtrl    : false,// 是否展示页数信息
+        onSelect    : true//点击回调事件
+    };
+})(window.jQuery);

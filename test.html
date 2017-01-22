@@ -14,13 +14,15 @@
 <script type="text/javascript">
 	var total = 160;
 	$("#clk").Pagination({
-		nowPage:3,
-		pageNum:Math.ceil(total/10),
-		pageAll:total,
-		showPage:10,
-		callback:function(selPage){
-			console.log("当前选择的页:%d",parseInt(selPage));
+		currentPage : 1,//当前页
+		displayPage : 5,//展示多少页
+		itemsCount 	: total, //总数量
+		remote : false,
+		pageSize 	: Math.ceil(total/10),//总页数
+		showCtrl	: false,
+		onSelect	:function(p) {
+			console.log(p);
 		}
-	});
+	});	
 </script>
 </html>

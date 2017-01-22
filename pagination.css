@@ -1,28 +1,26 @@
-.userCenter .h-pages {
-    margin: 30px 15px 15px 0
+.h-pages {
+    margin: 18px 0;
 }
 
-.userCenter .h-pages a {
+.h-pages a {
     font-size: 14px
 }
 
-.userCenter .h-pages a:hover {
+.h-pages a:hover {
     color: #ee6d68;
     text-decoration: underline
 }
 
-.userCenter .h-pages img {
+.h-pages img {
     height: 15px
 }
 
-.userCenter .h-pages .current {
+.h-pages .current {
     float: left;
     font-size: 14px
 }
 
-.userCenter .h-pages .pagination .rows {
-    font-size: 14px
-}
+
 .clearfix {
     zoom:1
 }
@@ -36,9 +34,14 @@
     clear: both
 }
 .h-pages .pagination {
-    float: right;
-    font-size: 24px;
-    padding-top: 3px
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+    /*padding-top: 3px*/
+}
+
+.h-pages .pagination .rows {
+    font-size: 14px
 }
 
 .h-pages .pagination .current {
@@ -46,7 +49,6 @@
     border-color: #ca3232;
     background: #ca3232;
     color: #fff;
-    display: block;
     width: 34px;
     height: 34px;
     line-height: 34px;
@@ -69,7 +71,8 @@
     height: 34px;
     line-height: 34px;
     text-align: center;
-    font-size: 14px
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .h-pages .pagination li a:hover {
@@ -130,4 +133,9 @@
 .h-pages .pagination .b-none {
     border: none;
     background: #fff
+}
+/*div*/
+
+.h-pages div{
+    display: inline-block;
 }
