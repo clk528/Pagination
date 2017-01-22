@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @author clk<chenlongke@xf9.com>
  * 翻页js插件。
  * currentPage  当前页
@@ -26,7 +26,7 @@
 		this.pageSize		= opts.pageSize;//总页数		  
 		this.showCtrl		= opts.showCtrl; // 是否展示页数信息
 		this.onSelect		= opts.onSelect;//点击回调事件
-		this.remote			= opts.remote;
+		this.remote      	= opts.remote;
 	}
 	
 	Pagination.prototype = {
