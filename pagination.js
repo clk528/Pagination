@@ -82,6 +82,27 @@
 			return tpl;
 		},
         _onCtrl : function(){
+            var self = this,
+                pag = self.hookNode.children('.h-pages');
+            function doPagination() {
+                var tmpNum = parseInt(pag.find('.page-num').val());
+                if ($.isNumeric(tmpNum) && tmpNum <= self.pageSize && tmpNum > 0) {
+                    if (!self.remote) {
+                        self.currentPage = tmpNum;
+                        self._drawHtml();
+                    }
+                    if ($.isFunction(self.onSelect)) {
+                        self.onSelect.call($(this), tmpNum);
+                    }
+                }
+            }
+            pag.on('click','.page-confirm',function(e) {
+                doPagination.call(this);
+            });
+            pag.on('keypress','.page-num',function(){
+                event.which == 13 && doPagination.call(this);
+            });
+
             return this;
         },
 		_onSelect : function (){
@@ -97,6 +118,7 @@
                     self.onSelect.call($(this), tmpNum);
                 }
             });
+            return this;
 		}
 	};
 
