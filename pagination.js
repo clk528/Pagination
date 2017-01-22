@@ -30,20 +30,20 @@
 	}
 	
 	Pagination.prototype = {
-		_init : function (opts,hookNode){//初始化
-			this.hookNode = hookNode;
+        _init : function (opts,hookNode){//初始化
+            this.hookNode = hookNode;
             var tpl = '<div class="h-pages"></div>';
             this.hookNode.html(tpl);
             this._drawHtml();
             this.showCtrl && this._onCtrl();
             this._onSelect();
-		},
-		_drawHtml : function(){//画翻页主体
+        },
+        _drawHtml : function(){//画翻页主体
             var outer = this.hookNode.children('.h-pages');
-			var tpl = '<ul class = "pagination fr mt20">';
-            
+            var tpl = '<ul class = "pagination fr mt20">';
+
             ((this.currentPage - 1) >=1 ) ? tpl+= '<li><a class="prev" data-page="'+(this.currentPage - 1)+'"><img src="static/images/zuo.png"></a></li>' : '';
-            
+
             if(this.pageSize > this.displayPage){
                 if(this.currentPage < this.displayPage){
                     for(var page = 1; page <= this.displayPage; page++ ){
@@ -71,19 +71,19 @@
             this.showCtrl && (tpl += this._drawCtrl());
             outer.html(tpl);
             return this;
-		},
-		_drawCtrl : function (){//画控制信息			
-			var tpl = ''+
-                    '<div>　'+
-                        '<span>' + this.itemsCount + '条</span>　'+
-                        '<span>共' + this.pageSize + '页</span>　' + 
-                        '<span>　到　<input type="text" class="page-num"/><button class="page-confirm">确定</button>页</span>' + 
-                    '</div>';
-			return tpl;
-		},
+        },
+        _drawCtrl : function (){//画控制信息			
+            var tpl = ''+
+            '<div>　'+
+                '<span>' + this.itemsCount + '条</span>　'+
+                '<span>共' + this.pageSize + '页</span>　' + 
+                '<span>　到　<input type="text" class="page-num"/><button class="page-confirm">确定</button>页</span>' + 
+            '</div>';
+            return tpl;
+        },
         _onCtrl : function(){
             var self = this,
-                pag = self.hookNode.children('.h-pages');
+            pag = self.hookNode.children('.h-pages');
             function doPagination() {
                 var tmpNum = parseInt(pag.find('.page-num').val());
                 if ($.isNumeric(tmpNum) && tmpNum <= self.pageSize && tmpNum > 0) {
@@ -102,11 +102,10 @@
             pag.on('keypress','.page-num',function(){
                 event.which == 13 && doPagination.call(this);
             });
-
             return this;
         },
-		_onSelect : function (){
-			var self = this;
+        _onSelect : function (){
+            var self = this;
             self.hookNode.children('.h-pages').on('click', 'a', function (e) {
                 e.preventDefault();
                 var tmpNum = parseInt($(this).attr('data-page'));
@@ -119,8 +118,8 @@
                 }
             });
             return this;
-		}
-	};
+        }
+    };
 
     $.fn.Pagination = function(options){
         var opts = $.extend({}, $.fn.Pagination.defaults, typeof options == 'object' && options);
