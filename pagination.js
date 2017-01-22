@@ -29,7 +29,7 @@
 		this.remote      	= opts.remote;
 	}
 	
-	Pagination.prototype = {
+    Pagination.prototype = {
         _init : function (opts,hookNode){//初始化
             this.hookNode = hookNode;
             var tpl = '<div class="h-pages"></div>';
