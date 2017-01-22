@@ -17,18 +17,16 @@
  */
 !(function($){
 	/** 使用严格模式 **/
-    "use strict";
-	
-	function Pagination(opts){
-		this.currentPage	= opts.currentPage;//当前页
-		this.displayPage	= opts.displayPage < 5 ? 5 : opts.displayPage;//展示多少页
-		this.itemsCount		= opts.itemsCount; //总数量
-		this.pageSize		= opts.pageSize;//总页数		  
-		this.showCtrl		= opts.showCtrl; // 是否展示页数信息
-		this.onSelect		= opts.onSelect;//点击回调事件
-		this.remote      	= opts.remote;
-	}
-	
+    "use strict";	
+    function Pagination(opts){
+    	this.currentPage	= opts.currentPage;//当前页
+    	this.displayPage	= opts.displayPage < 5 ? 5 : opts.displayPage;//展示多少页
+    	this.itemsCount		= opts.itemsCount; //总数量
+    	this.pageSize		= opts.pageSize;//总页数		  
+    	this.showCtrl		= opts.showCtrl; // 是否展示页数信息
+    	this.onSelect		= opts.onSelect;//点击回调事件
+    	this.remote      	= opts.remote;
+    }	
     Pagination.prototype = {
         _init : function (opts,hookNode){//初始化
             this.hookNode = hookNode;
