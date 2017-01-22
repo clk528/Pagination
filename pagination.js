@@ -20,13 +20,13 @@
     "use strict";
 	
 	function Pagination(opts){
-		this.currentPage  = opts.currentPage;//当前页
-		this.displayPage  = opts.displayPage < 5 ? 5 : opts.displayPage;//展示多少页
-		this.itemsCount   = opts.itemsCount; //总数量
-		this.pageSize     = opts.pageSize;//总页数
-        this.remote       = opts.remote;  
-		this.showCtrl     = opts.showCtrl; // 是否展示页数信息
-		this.onSelect     = opts.onSelect;//点击回调事件
+		this.currentPage	= opts.currentPage;//当前页
+		this.displayPage	= opts.displayPage < 5 ? 5 : opts.displayPage;//展示多少页
+		this.itemsCount		= opts.itemsCount; //总数量
+		this.pageSize		= opts.pageSize;//总页数		  
+		this.showCtrl		= opts.showCtrl; // 是否展示页数信息
+		this.onSelect		= opts.onSelect;//点击回调事件
+		this.remote			= opts.remote;
 	}
 	
 	Pagination.prototype = {
@@ -109,9 +109,9 @@
         currentPage : 1,//当前页
         displayPage : 5,//展示多少页
         itemsCount  : 0, //总数量
-        pageSize    : 0,//总页数
-        remote      : true,
+        pageSize    : 0,//总页数        
         showCtrl    : false,// 是否展示页数信息
-        onSelect    : true//点击回调事件
+        onSelect    : true,//点击回调事件
+        remote      : true
     };
 })(window.jQuery);
