@@ -1,5 +1,5 @@
 ﻿/**
- * @author clk<chenlongke@xf9.com>
+ * @author clk<clk@528.com>
  * 翻页js插件。
  * currentPage  当前页
  * pageSize  总页数
@@ -16,7 +16,7 @@
  *  });
  */
 !(function($){
-	/** 使用严格模式 **/
+    /** 使用严格模式 **/
     "use strict";	
     function Pagination(opts){
     	this.currentPage	= opts.currentPage;//当前页
